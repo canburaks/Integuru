@@ -1,29 +1,35 @@
-[tool.poetry]
+[project]
 name = "integuru"
 version = "0.1.0"
 description = ""
-authors = ["alanalanlu <alanlu1999@gmail.com>"]
+requires-python = ">=3.12"
 readme = "README.md"
+dependencies = [
+    "click>=8.1.8",
+    "ipykernel>=6.29.5",
+    "ipython>=8.32.0",
+    "langchain-core>=0.3.40",
+    "langchain-openai>=0.3.7",
+    "langgraph>=0.3.1",
+    "langsmith>=0.3.11",
+    "matplotlib>=3.10.0",
+    "networkx>=3.4.2",
+    "pip>=25.0.1",
+    "playwright>=1.50.0",
+    "python-dotenv>=1.0.1",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.12,<3.13"
-langchain-openai = "^0.2.0"
-langchain-core = "^0.3.1"
-langgraph = "^0.2.22"
-langsmith = "^0.1.122"
-python-dotenv = "^1.0.1"
-click = "^8.1.7"
-playwright = "^1.47.0"
-networkx = "^3.3"
-matplotlib = "^3.9.2"
-ipykernel = "^6.29.5"
-
-[tool.poetry.scripts]
+[project.scripts]
 integuru = "integuru.__main__:cli"
+start_recording = "create_har:open_browser_and_wait"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.0"
+
+
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.uv.pip]
+compile-bytecode = true

@@ -66,6 +66,27 @@ Let's assume we want to download utility bills:
 
    **Recommended to use gpt-4o as the model for graph generation as it supports function calling. Integuru will automatically switch to o1-preview for code generation if available in the user's OpenAI account.** 
 
+### Using the Makefile (Recommended)
+
+For convenience, you can use the included Makefile to run common commands:
+
+1. To open a browser and record network requests:
+   ```
+   make browse
+   ```
+
+2. To analyze the recorded HAR file:
+   ```
+   make analyze PROMPT="your action description" MODEL="o1"
+   ```
+
+3. To generate integration code:
+   ```
+   make generate_code PROMPT="your action description" MODEL="o1"
+   ```
+
+Run `make help` to see all available commands and options.
+
 ## Usage
 
 After setting up the project, you can use Integuru to analyze and reverse-engineer API requests for external platforms. Simply provide the appropriate .har file and a prompt describing the action that you want to trigger.
@@ -89,6 +110,41 @@ Options:
   --help                          Show this message and exit.
 ```
 
+### Using the Makefile
+
+The Makefile provides a simpler interface for common operations:
+
+```
+make browse                                # Open browser to record network requests
+make analyze PROMPT="your prompt"          # Analyze HAR file with the specified prompt
+make generate_code PROMPT="your prompt"    # Generate integration code with the specified prompt
+```
+
+You can customize the model by adding the MODEL parameter:
+```
+make generate_code PROMPT="your prompt" MODEL="gpt-4o"
+```
+
+### Using the Generated Code
+
+After generating the integration code with `make generate_code`, you can import and use the generated functions in your own Python code:
+
+```python
+from generated_code import fetch_mevzuat_data
+
+# Load cookies from cookies.json
+with open('cookies.json', 'r') as f:
+    cookies_data = json.load(f)
+
+# Convert to cookie string
+cookie_string = '; '.join([f"{cookie['name']}={cookie['value']}" for cookie in cookies_data])
+
+# Use the generated function
+result = fetch_mevzuat_data(cookie_string)
+print(result)
+```
+
+The example script (`example_usage.py`) demonstrates how to properly load cookies and use the generated code.
 
 ## Running Unit Tests
 
